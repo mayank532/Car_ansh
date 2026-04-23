@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CARANSH – Car Accessories & Styling | Mandsaur</title>
+<meta name="description" content="Mandsaur's go-to destination for Android screens, premium seat covers, LED lights, Ultra HD cameras & custom car styling. Nai Abaadi, Mhow Neemuch Road, Mandsaur."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Barlow+Condensed:wght@400;700;900&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --red: #e8001d;
+    --red-dim: #a0001a;
+    --bg: #080808;
+    --bg2: #0f0f0f;
+    --bg3: #141414;
+    --surface: #1a1a1a;
+    --border: rgba(255,255,255,0.07);
+    --text: #f0ede8;
+    --text-dim: #888;
+    --gold: #c8a84b;
+    --white: #fff;
+    --transition: cubic-bezier(0.4,0,0.2,1);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;font-size:16px}
+  body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;overflow-x:hidden;cursor:default}
+
+  /* ---- NOISE OVERLAY ---- */
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.4}
+
+  /* ---- NAV ---- */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 40px;transition:background .4s,backdrop-filter .4s;border-bottom:1px solid transparent}
+  nav.scrolled{background:rgba(8,8,8,.92);backdrop-filter:blur(16px);border-bottom-color:var(--border)}
+  .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:3px;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:10px}
+  .nav-logo span{color:var(--red)}
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{color:var(--text-dim);text-decoration:none;font-size:.82rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;transition:color .25s}
+  .nav-links a:hover{color:var(--red)}
+  .nav-cta{background:var(--red);color:#fff;border:none;padding:10px 24px;border-radius:999px;font-family:'Barlow',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background .25s,transform .2s;text-decoration:none}
+  .nav-cta:hover{background:#ff0020;transform:translateY(-1px)}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+  .hamburger span{display:block;width:24px;height:2px;background:var(--text);transition:.3s}
+  .mob-menu{display:none;position:fixed;inset:0;background:rgba(8,8,8,.98);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:36px}
+  .mob-menu.open{display:flex}
+  .mob-menu a{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--text);text-decoration:none;letter-spacing:4px;transition:color .2s}
+  .mob-menu a:hover{color:var(--red)}
+  .mob-close{position:absolute;top:24px;right:32px;font-size:2rem;color:var(--text-dim);cursor:pointer}
+
+  /* ---- HERO ---- */
+  .hero{min-height:100vh;position:relative;display:flex;align-items:center;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#000 0%,#0d0003 40%,#110000 100%)}
+  .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(232,0,29,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(232,0,29,.06) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse at center,black 20%,transparent 80%)}
+  .hero-glow{position:absolute;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(232,0,29,.18) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);filter:blur(40px)}
+  .hero-content{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:140px 40px 80px;width:100%}
+  .hero-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:.8rem;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:18px;opacity:0;animation:fadeUp .8s .2s forwards var(--transition)}
+  .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,14vw,13rem);line-height:.9;letter-spacing:2px;color:var(--white);margin-bottom:0;opacity:0;animation:fadeUp .8s .35s forwards var(--transition)}
+  .hero-title .outline{-webkit-text-stroke:2px var(--red);color:transparent}
+  .hero-title .block{display:block}
+  .hero-sub{font-size:1.1rem;font-weight:300;color:var(--text-dim);max-width:540px;line-height:1.7;margin:24px 0 42px;opacity:0;animation:fadeUp .8s .5s forwards var(--transition)}
+  .hero-sub strong{color:var(--text);font-weight:600}
+  .hero-btns{display:flex;gap:16px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .65s forwards var(--transition)}
+  .btn-primary{background:var(--red);color:#fff;border:none;padding:15px 40px;border-radius:999px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .25s;text-decoration:none;display:inline-block}
+  .btn-primary:hover{background:#ff0020;transform:translateY(-2px);box-shadow:0 8px 30px rgba(232,0,29,.4)}
+  .btn-outline{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.25);padding:15px 40px;border-radius:999px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .25s;text-decoration:none;display:inline-block}
+  .btn-outline:hover{border-color:var(--red);color:var(--red)}
+  .hero-stats{display:flex;gap:48px;margin-top:72px;padding-top:40px;border-top:1px solid var(--border);opacity:0;animation:fadeUp .8s .8s forwards var(--transition)}
+  .stat-num{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;color:var(--red);display:block}
+  .stat-label{font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim)}
+
+
+  /* ---- MARQUEE ---- */
+  .marquee-wrap{background:var(--red);padding:13px 0;overflow:hidden}
+  .marquee{display:flex;gap:0;white-space:nowrap;animation:marqueeAnim 22s linear infinite}
+  .marquee-item{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:3px;color:#fff;padding:0 32px;opacity:.9}
+  .marquee-dot{color:rgba(255,255,255,.5)}
+
+  /* ---- SECTION BASE ---- */
+  section{padding:100px 40px;max-width:1200px;margin:0 auto}
+  .section-label{font-family:'Barlow Condensed',sans-serif;font-size:.75rem;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:12px}
+  .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.4rem,5vw,4.5rem);line-height:1;color:var(--white);margin-bottom:20px}
+  .section-desc{color:var(--text-dim);font-size:1rem;line-height:1.8;max-width:560px;font-weight:300}
+
+  /* ---- SERVICES ---- */
+  #services{padding:100px 40px;max-width:1400px;margin:0 auto}
+  .services-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;flex-wrap:wrap;gap:24px}
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+  @media(max-width:900px){.services-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.services-grid{grid-template-columns:1fr}}
+  .service-card{background:var(--surface);position:relative;overflow:hidden;cursor:pointer;transition:transform .4s var(--transition);group:true}
+  .service-card:hover{transform:scale(1.02);z-index:2}
+  .card-inner{padding:36px 32px 32px;position:relative;z-index:1;min-height:240px;display:flex;flex-direction:column;justify-content:flex-end}
+  .card-bg{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.3) 100%)}
+  .card-icon{font-size:2.4rem;margin-bottom:auto;display:block}
+  .card-name{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:2px;color:var(--white);margin-bottom:6px}
+  .card-desc{font-size:.82rem;color:rgba(255,255,255,.55);line-height:1.6;font-weight:300}
+  .card-price{display:flex;align-items:center;gap:10px;margin-top:16px}
+  .price-from{font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim)}
+  .price-val{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:700;color:var(--text)}
+  .discount-badge{position:absolute;top:16px;right:16px;background:var(--red);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.8rem;padding:5px 10px;letter-spacing:1px;transform:rotate(2deg);z-index:3}
+  .discount-badge::before{content:'';position:absolute;inset:-2px;border:1px dashed rgba(255,255,255,.5)}
+  .new-badge{position:absolute;top:16px;left:16px;background:var(--gold);color:#000;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.72rem;padding:4px 10px;letter-spacing:2px;text-transform:uppercase;z-index:3}
+  .card-accent{position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--transition)}
+  .service-card:hover .card-accent{transform:scaleX(1)}
+
+  /* Card pattern backgrounds */
+  .card-pat-1{background:linear-gradient(135deg,#1a0000 0%,#0f0f0f 100%)}
+  .card-pat-2{background:linear-gradient(135deg,#001a08 0%,#0f0f0f 100%)}
+  .card-pat-3{background:linear-gradient(135deg,#00001a 0%,#0f0f0f 100%)}
+  .card-pat-4{background:linear-gradient(135deg,#1a1000 0%,#0f0f0f 100%)}
+  .card-pat-5{background:linear-gradient(135deg,#0f001a 0%,#0f0f0f 100%)}
+  .card-pat-6{background:linear-gradient(135deg,#001a1a 0%,#0f0f0f 100%)}
+  .card-pat-7{background:linear-gradient(135deg,#1a000f 0%,#0f0f0f 100%)}
+  .card-pat-8{background:linear-gradient(135deg,#0a0a00 0%,#0f0f0f 100%)}
+  .card-pat-9{background:linear-gradient(135deg,#001010 0%,#0f0f0f 100%)}
+
+  /* ---- CALCULATOR ---- */
+  #calculator{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:100px 40px}
+  .calc-wrap{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.1fr;gap:80px;align-items:start}
+  @media(max-width:860px){.calc-wrap{grid-template-columns:1fr;gap:48px}}
+  .calc-box{background:var(--bg3);border:1px solid var(--border);padding:40px}
+  .calc-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:3px;color:var(--white);margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+  .calc-title span{color:var(--red)}
+  .calc-item{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--border)}
+  .calc-item:last-of-type{border-bottom:none}
+  .calc-item-name{font-size:.9rem;color:var(--text);font-weight:600}
+  .calc-item-sub{font-size:.75rem;color:var(--text-dim);display:block;margin-top:2px;font-weight:300}
+  .calc-toggle{display:flex;align-items:center;gap:12px}
+  .calc-qty{display:flex;align-items:center;gap:8px}
+  .qty-btn{width:28px;height:28px;background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+  .qty-btn:hover{background:var(--red)}
+  .qty-val{font-family:'Barlow Condensed',sans-serif;font-size:1rem;color:var(--text);min-width:20px;text-align:center}
+  .calc-check{width:20px;height:20px;accent-color:var(--red);cursor:pointer}
+  .calc-item-price{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;color:var(--gold);font-weight:700;min-width:80px;text-align:right}
+  .calc-total-box{background:var(--red);padding:20px 24px;margin-top:24px;display:flex;justify-content:space-between;align-items:center}
+  .total-label{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:3px;color:#fff}
+  .total-val{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:#fff}
+  .calc-note{font-size:.75rem;color:var(--text-dim);margin-top:12px;line-height:1.6;font-style:italic}
+  .calc-discount-note{color:var(--gold);font-size:.78rem;margin-top:8px;font-weight:600}
+  .calc-cta{width:100%;background:var(--bg);color:var(--red);border:1px solid var(--red);padding:14px;border-radius:999px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.95rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;margin-top:16px;transition:all .25s}
+  .calc-cta:hover{background:var(--red);color:#fff}
+
+  /* ---- WHY US ---- */
+  #why{background:var(--bg)}
+  .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-top:56px}
+  @media(max-width:800px){.why-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:460px){.why-grid{grid-template-columns:1fr}}
+  .why-card{background:var(--bg);padding:40px 32px;transition:background .3s}
+  .why-card:hover{background:var(--surface)}
+  .why-icon{font-size:2rem;margin-bottom:20px;display:block}
+  .why-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:1px;color:var(--white);margin-bottom:8px;text-transform:uppercase}
+  .why-desc{font-size:.82rem;color:var(--text-dim);line-height:1.7;font-weight:300}
+
+  /* ---- CONTACT ---- */
+  #contact{background:var(--bg2);border-top:1px solid var(--border)}
+  .contact-inner{max-width:1200px;margin:0 auto;padding:100px 40px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+  @media(max-width:800px){.contact-inner{grid-template-columns:1fr;gap:56px}}
+  .contact-channels{display:flex;flex-direction:column;gap:16px;margin-top:36px}
+  .channel{display:flex;align-items:center;gap:18px;padding:20px 24px;background:var(--bg3);border:1px solid var(--border);text-decoration:none;color:var(--text);transition:border-color .25s,transform .25s}
+  .channel:hover{border-color:var(--red);transform:translateX(6px)}
+  .channel-icon{font-size:1.5rem;width:44px;text-align:center}
+  .channel-info{flex:1}
+  .channel-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:2px;text-transform:uppercase;color:var(--white)}
+  .channel-val{font-size:.82rem;color:var(--text-dim);margin-top:2px}
+  .channel-arrow{color:var(--red);font-size:1.2rem}
+  .map-placeholder{background:var(--bg3);border:1px solid var(--border);padding:32px;display:flex;flex-direction:column;gap:16px}
+  .map-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:3px;color:var(--white)}
+  .map-addr{font-size:.85rem;color:var(--text-dim);line-height:1.8;font-weight:300}
+  .map-embed{width:100%;height:220px;border:none;filter:grayscale(1) invert(0.88) contrast(1.1);margin-top:8px}
+  .map-link{color:var(--red);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-top:8px}
+  .map-link:hover{text-decoration:underline}
+
+  /* ---- FOOTER ---- */
+  footer{background:var(--bg);border-top:1px solid var(--border);padding:40px;text-align:center}
+  .footer-logo{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:4px;color:var(--white);margin-bottom:12px}
+  .footer-logo span{color:var(--red)}
+  .footer-text{font-size:.78rem;color:var(--text-dim);letter-spacing:1px}
+  .footer-links{display:flex;justify-content:center;gap:28px;margin-top:20px;flex-wrap:wrap}
+  .footer-links a{color:var(--text-dim);font-size:.75rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:color .2s}
+  .footer-links a:hover{color:var(--red)}
+
+  /* ---- WHATSAPP FLOAT ---- */
+  .wa-float{position:fixed;bottom:28px;right:28px;z-index:200;background:#25d366;color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,.45);transition:transform .25s,box-shadow .25s;animation:waPulse 3s infinite}
+  .wa-float:hover{transform:scale(1.1);box-shadow:0 8px 32px rgba(37,211,102,.6)}
+  .ig-float{position:fixed;bottom:96px;right:28px;z-index:200;background:radial-gradient(circle at 30% 110%,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;text-decoration:none;box-shadow:0 4px 20px rgba(220,39,67,.45);transition:transform .25s,box-shadow .25s}
+  .ig-float:hover{transform:scale(1.1);box-shadow:0 8px 32px rgba(220,39,67,.65)}
+
+  /* ---- LAZY REVEAL ---- */
+  .reveal{opacity:0;transform:translateY(32px);transition:opacity .7s var(--transition),transform .7s var(--transition)}
+  .reveal.visible{opacity:1;transform:none}
+  .reveal-left{opacity:0;transform:translateX(-32px);transition:opacity .7s var(--transition),transform .7s var(--transition)}
+  .reveal-left.visible{opacity:1;transform:none}
+  .reveal-right{opacity:0;transform:translateX(32px);transition:opacity .7s var(--transition),transform .7s var(--transition)}
+  .reveal-right.visible{opacity:1;transform:none}
+  .stagger > *{opacity:0;transform:translateY(24px);transition:opacity .6s var(--transition),transform .6s var(--transition)}
+  .stagger.visible > *:nth-child(1){opacity:1;transform:none;transition-delay:.05s}
+  .stagger.visible > *:nth-child(2){opacity:1;transform:none;transition-delay:.15s}
+  .stagger.visible > *:nth-child(3){opacity:1;transform:none;transition-delay:.25s}
+  .stagger.visible > *:nth-child(4){opacity:1;transform:none;transition-delay:.35s}
+  .stagger.visible > *:nth-child(5){opacity:1;transform:none;transition-delay:.45s}
+  .stagger.visible > *:nth-child(6){opacity:1;transform:none;transition-delay:.55s}
+  .stagger.visible > *:nth-child(7){opacity:1;transform:none;transition-delay:.65s}
+  .stagger.visible > *:nth-child(8){opacity:1;transform:none;transition-delay:.75s}
+  .stagger.visible > *:nth-child(n+9){opacity:1;transform:none;transition-delay:.8s}
+
+  /* ---- KEYFRAMES ---- */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+  @keyframes marqueeAnim{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes scrollLine{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+  @keyframes waPulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.45)}50%{box-shadow:0 4px 32px rgba(37,211,102,.75),0 0 0 10px rgba(37,211,102,.1)}}
+
+  /* ---- RESPONSIVE ---- */
+  @media(max-width:768px){
+    nav{padding:16px 20px}
+    .nav-links,.nav-cta{display:none}
+    .hamburger{display:flex}
+    .hero-content{padding:120px 20px 60px}
+    .hero-stats{gap:28px}
+    section{padding:70px 20px}
+    #services{padding:70px 20px}
+    .services-header{flex-direction:column}
+    #calculator{padding:70px 20px}
+    .calc-box{padding:28px 20px}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-logo" href="#"><span>CAR</span>ANSH</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#calculator">Cost Calc</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="https://wa.me/919770118143?text=Hi%20CARANSH!%20I%20want%20to%20enquire%20about%20your%20services." target="_blank">WhatsApp Us</a>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu">
+  <span class="mob-close" onclick="toggleMenu()">✕</span>
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#calculator" onclick="toggleMenu()">Cost Calculator</a>
+  <a href="#why" onclick="toggleMenu()">Why Us</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+  <a href="https://wa.me/919770118143" target="_blank" style="color:var(--red)">WhatsApp ↗</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" style="padding:0;max-width:100%">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">📍 Mandsaur's #1 Car Studio · Nai Abaadi, Mhow Neemuch Road</p>
+    <h1 class="hero-title">
+      <span class="block">CAR</span>
+      <span class="block outline">ANSH</span>
+    </h1>
+    <p class="hero-sub">
+      <strong>Mandsaur's go-to destination</strong> for Android screens, premium seat covers,
+      LED lights, Ultra HD cameras &amp; full custom car styling.
+      Near Hafiz Petrol Pump, Sitamu Fatak.
+    </p>
+    <div class="hero-btns">
+      <a class="btn-primary" href="#calculator">Know Your Total Cost</a>
+      <a class="btn-outline" href="#services">View All Services</a>
+    </div>
+    <div class="hero-stats stagger">
+      <div>
+        <span class="stat-num">500+</span>
+        <span class="stat-label">Cars Done</span>
+      </div>
+      <div>
+        <span class="stat-num">9+</span>
+        <span class="stat-label">Service Types</span>
+      </div>
+      <div>
+        <span class="stat-num">5★</span>
+        <span class="stat-label">Customer Trust</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span class="marquee-item">Android Screens</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">LED Lighting</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Ultra HD Cameras</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Seat Covers</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Headlamps</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Car Flooring</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Speakers &amp; Music</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Custom Styling</span><span class="marquee-item marquee-dot">✦</span>
+    <!-- duplicate for seamless loop -->
+    <span class="marquee-item">Android Screens</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">LED Lighting</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Ultra HD Cameras</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Seat Covers</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Headlamps</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Car Flooring</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Speakers &amp; Music</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Custom Styling</span><span class="marquee-item marquee-dot">✦</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div id="services" style="padding:100px 40px;max-width:1400px;margin:0 auto">
+  <div class="services-header reveal">
+    <div>
+      <p class="section-label">What We Do</p>
+      <h2 class="section-title">Our Services</h2>
+    </div>
+    <p class="section-desc" style="margin:0">Every service delivered with precision, quality parts, and our satisfaction guarantee.</p>
+  </div>
+  <div class="services-grid stagger">
+
+    <div class="service-card card-pat-1">
+      <div class="card-bg"></div>
+      <div class="discount-badge">20% OFF</div>
+      <div class="card-inner">
+        <span class="card-icon">🖥️</span>
+        <div>
+          <div class="card-name">Android Car Screen</div>
+          <div class="card-desc">Full HD/QLED Android screens with GPS, Bluetooth, CarPlay & wireless mirroring</div>
+          <div class="card-price">
+            <span class="price-from">Starting</span>
+            <span class="price-val">₹6,500</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-accent"></div>
+    </div>
+
+    <div class="service-card card-pat-2">
+      <div class="card-bg"></div>
+      <div class="new-badge">Popular</div>
+      <div class="card-inner">
+        <span class="card-icon">🪑</span>
+        <div>
+          <div class="card-name">Premium Seat Covers</div>
+          <div class="card-desc">Leatherette, fabric & custom 3D seat covers for all car models</div>
+          <div class="card-price">
+            <span class="price-from">Starting</span>
+            <span class="price-val">₹3,200</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-accent"></div>
+    </div>
+
+    <div class="service-card card-pat-3">
+      <div class="card-bg"></div>
+      <div class="discount-badge">15% OFF</div>
+      <div class="card-inner">
+        <span class="card-icon">💡</span>
+        <div>
+          <div class="card-name">LED Lighting</div>
+          <div class="card-desc">Interior ambient LEDs, DRLs, underglow & full LED headlight upgrades</div>
+          <div class="card-price">
+            <span class="price-from">Starting</span>
+            <span class="price-val">₹1,200</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-accent"></div>
+    </div>
+
+    <div class="service-card card-pat-4">
+      <div class="card-bg"></div>
+      <div class="new-badge">New</div>
+      <div class="card-inner">
+        <span class="card-icon">📸</span>
+        <div>
+          <div class="card-name">Ultra HD Cameras</div>
+          <div class="card-desc">4K reverse cameras, 360° surround view & dual dashcams with night vision</div>
+          <div class="card-price">
+            <span class="price-from">Starting</span>
+            <span class="price-val">₹2,800</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-accent"></div>
+    </div>
+
+    <div class="service-card card-pat-5">
+      <div class="card-bg"></div>
+      <div class="discount-badge">10% OFF</div>
+      <div class="card-inner">
+        <span class="card-icon">🔆</span>
+        <div>
+          <div class="card-name">Headlamp Upgrade</div>
+          <div class="card-desc">HID projector, bi-LED retrofit & custom angel eyes for all vehicles</div>
+          <div class="card-price">
+            <span class="price-from">Starting</span>
+            <span class="price-val">₹2,500</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-accent"></div>
+    </div>
+
+    <div class="service-card card-pat-6">
+      <div class="card-bg"></div>
+      <div class="card-inner">
+        <span class="card-icon">🎵</span>
+        <div>
+          <div class="card-name">Speakers & Music</div>
+          <div class="card-desc">Component speakers, subwoofers, amplifiers & full audio system install</div>
+          <div class="card-price">
+            <span class="price-from">Starting</span>
+            <span class="price-val">₹2,000</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-accent"></div>
+    </div>
+
+    <div class="service-card card-pat-7">
+      <div class="card-bg"></div>
+      <div class="new-badge">Popular</div>
+      <div class="card-inner">
+        <span class="card-icon">🏎️</span>
+        <div>
+          <div class="card-name">Car Flooring</div>
+          <div class="card-desc">7D mats, 3D mats, custom carpet flooring & luxury floor lining</div>
+          <div class="card-price">
+            <span class="price-from">Starting</span>
+            <span class="price-val">₹1,800</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-accent"></div>
+    </div>
+
+    <div class="service-card card-pat-8">
+      <div class="card-bg"></div>
+      <div class="discount-badge">Combo Deal</div>
+      <div class="card-inner">
+        <span class="card-icon">✨</span>
+        <div>
+          <div class="card-name">Custom Car Styling</div>
+          <div class="card-desc">Body wraps, spoilers, side skirts, chrome delete & exterior styling kits</div>
+          <div class="card-price">
+            <span class="price-from">Starting</span>
+            <span class="price-val">₹4,000</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-accent"></div>
+    </div>
+
+    <div class="service-card card-pat-9" style="background:var(--red);cursor:default">
+      <div class="card-inner" style="justify-content:center;align-items:center;text-align:center;min-height:240px">
+        <span class="card-icon">🤝</span>
+        <div class="card-name" style="font-size:1.4rem">Can't find your service?</div>
+        <div class="card-desc" style="color:rgba(255,255,255,.75);margin:8px 0 20px">We do a lot more. WhatsApp us and we'll sort it out.</div>
+        <a class="btn-outline" href="https://wa.me/919770118143?text=Hi%20CARANSH!%20I%20need%20a%20custom%20service." target="_blank" style="border-color:#fff;color:#fff;padding:11px 24px;font-size:.85rem">Chat Now ↗</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- COST CALCULATOR -->
+<div id="calculator" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:100px 40px">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="reveal" style="text-align:center;margin-bottom:64px">
+      <p class="section-label">Plan Your Budget</p>
+      <h2 class="section-title">Know Your Total Cost</h2>
+      <p class="section-desc" style="margin:12px auto 0;text-align:center;max-width:500px">Pick the services you want and get an instant estimate before visiting us. No surprises.</p>
+    </div>
+    <div class="calc-wrap reveal">
+      <div>
+        <div class="calc-box">
+          <div class="calc-title">🧮 Select Services <span>→</span></div>
+
+          <!-- Items -->
+          <div class="calc-item">
+            <div>
+              <div class="calc-item-name">Android Car Screen</div>
+              <span class="calc-item-sub">Basic HD unit (upgrades available)</span>
+            </div>
+            <div class="calc-toggle">
+              <input class="calc-check" type="checkbox" data-price="6500" onchange="calcTotal()"/>
+              <div class="calc-item-price">₹6,500</div>
+            </div>
+          </div>
+
+          <div class="calc-item">
+            <div>
+              <div class="calc-item-name">Premium Seat Covers</div>
+              <span class="calc-item-sub">Full set (all seats)</span>
+            </div>
+            <div class="calc-toggle">
+              <input class="calc-check" type="checkbox" data-price="3200" onchange="calcTotal()"/>
+              <div class="calc-item-price">₹3,200</div>
+            </div>
+          </div>
+
+          <div class="calc-item">
+            <div>
+              <div class="calc-item-name">LED Interior Lighting</div>
+              <span class="calc-item-sub">Ambient + footwell LEDs</span>
+            </div>
+            <div class="calc-toggle">
+              <input class="calc-check" type="checkbox" data-price="1200" onchange="calcTotal()"/>
+              <div class="calc-item-price">₹1,200</div>
+            </div>
+          </div>
+
+          <div class="calc-item">
+            <div>
+              <div class="calc-item-name">Ultra HD Reverse Camera</div>
+              <span class="calc-item-sub">4K with night vision</span>
+            </div>
+            <div class="calc-toggle">
+              <input class="calc-check" type="checkbox" data-price="2800" onchange="calcTotal()"/>
+              <div class="calc-item-price">₹2,800</div>
+            </div>
+          </div>
+
+          <div class="calc-item">
+            <div>
+              <div class="calc-item-name">360° Surround Camera</div>
+              <span class="calc-item-sub">4-camera bird-eye view system</span>
+            </div>
+            <div class="calc-toggle">
+              <input class="calc-check" type="checkbox" data-price="6000" onchange="calcTotal()"/>
+              <div class="calc-item-price">₹6,000</div>
+            </div>
+          </div>
+
+          <div class="calc-item">
+            <div>
+              <div class="calc-item-name">Headlamp Upgrade (HID/LED)</div>
+              <span class="calc-item-sub">Pair of projector headlamps</span>
+            </div>
+            <div class="calc-toggle">
+              <input class="calc-check" type="checkbox" data-price="2500" onchange="calcTotal()"/>
+              <div class="calc-item-price">₹2,500</div>
+            </div>
+          </div>
+
+          <div class="calc-item">
+            <div>
+              <div class="calc-item-name">Speaker Upgrade (2 pcs)</div>
+              <span class="calc-item-sub">Component pair + installation</span>
+            </div>
+            <div class="calc-toggle">
+              <input class="calc-check" type="checkbox" data-price="2000" onchange="calcTotal()"/>
+              <div class="calc-item-price">₹2,000</div>
+            </div>
+          </div>
+
+          <div class="calc-item">
+            <div>
+              <div class="calc-item-name">Car Flooring (7D Mats)</div>
+              <span class="calc-item-sub">Full car set</span>
+            </div>
+            <div class="calc-toggle">
+              <input class="calc-check" type="checkbox" data-price="1800" onchange="calcTotal()"/>
+              <div class="calc-item-price">₹1,800</div>
+            </div>
+          </div>
+
+          <div class="calc-item">
+            <div>
+              <div class="calc-item-name">Dashcam (Dual)</div>
+              <span class="calc-item-sub">Front + rear with parking mode</span>
+            </div>
+            <div class="calc-toggle">
+              <input class="calc-check" type="checkbox" data-price="3500" onchange="calcTotal()"/>
+              <div class="calc-item-price">₹3,500</div>
+            </div>
+          </div>
+
+          <div class="calc-item">
+            <div>
+              <div class="calc-item-name">Custom Exterior Styling</div>
+              <span class="calc-item-sub">Spoiler / wrap / chrome delete</span>
+            </div>
+            <div class="calc-toggle">
+              <input class="calc-check" type="checkbox" data-price="4000" onchange="calcTotal()"/>
+              <div class="calc-item-price">₹4,000</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Result box -->
+      <div>
+        <div class="calc-box" style="position:sticky;top:100px">
+          <div class="calc-title">💰 Your Estimate <span>↓</span></div>
+          <div id="selectedList" style="min-height:80px;color:var(--text-dim);font-size:.85rem;line-height:2">
+            <em>Select services on the left to see your estimate here.</em>
+          </div>
+          <div class="calc-total-box">
+            <span class="total-label">Estimated Total</span>
+            <span class="total-val" id="totalVal">₹0</span>
+          </div>
+          <p class="calc-discount-note" id="discountNote" style="display:none">🎉 You qualify for a combo discount! Mention this when you visit.</p>
+          <p class="calc-note">* Prices are starting estimates. Final cost depends on your car model and selected brand. Visit us or WhatsApp for an exact quote.</p>
+          <button class="calc-cta" id="calcWaBtn" onclick="sendToWhatsApp()" style="display:none">📲 Send This Estimate on WhatsApp</button>
+          <button class="calc-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" style="margin-top:8px">📞 Visit Us / Call Us</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY US -->
+<div id="why" style="background:var(--bg);padding:100px 40px">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="reveal" style="text-align:center;margin-bottom:0">
+      <p class="section-label">The CARANSH Difference</p>
+      <h2 class="section-title">Why Choose Us?</h2>
+    </div>
+    <div class="why-grid stagger" style="background:var(--border);margin-top:56px">
+      <div class="why-card">
+        <span class="why-icon">🏆</span>
+        <div class="why-name">Quality Guaranteed</div>
+        <div class="why-desc">We use branded, tested products. Every install is backed by our service warranty.</div>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">⚡</span>
+        <div class="why-name">Fast Turnaround</div>
+        <div class="why-desc">Same-day service for most accessories. Minimal wait, maximum output.</div>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">💰</span>
+        <div class="why-name">Honest Pricing</div>
+        <div class="why-desc">No hidden charges. Use our cost calculator to know exactly what you'll pay.</div>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🛠️</span>
+        <div class="why-name">Expert Fitting</div>
+        <div class="why-desc">Experienced technicians with a clean, professional workshop environment.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" style="background:var(--bg2);border-top:1px solid var(--border)">
+  <div class="contact-inner">
+    <div class="reveal-left">
+      <p class="section-label">Get In Touch</p>
+      <h2 class="section-title">Visit or<br/>Reach Out</h2>
+      <p class="section-desc">We're open 7 days a week. Walk in, call, or drop a message — we'll get back to you fast.</p>
+      <div class="contact-channels">
+        <a class="channel" href="https://wa.me/919770118143?text=Hi%20CARANSH!%20I%20want%20to%20enquire%20about%20your%20services." target="_blank">
+          <span class="channel-icon">📱</span>
+          <div class="channel-info">
+            <div class="channel-name">WhatsApp</div>
+            <div class="channel-val">+91 97701 18143 — Tap to chat instantly</div>
+          </div>
+          <span class="channel-arrow">→</span>
+        </a>
+        <a class="channel" href="tel:+919770118143">
+          <span class="channel-icon">📞</span>
+          <div class="channel-info">
+            <div class="channel-name">Call Us</div>
+            <div class="channel-val">+91 97701 18143</div>
+          </div>
+          <span class="channel-arrow">→</span>
+        </a>
+        <a class="channel" href="https://instagram.com/caransh_car_decor" target="_blank">
+          <span class="channel-icon">📸</span>
+          <div class="channel-info">
+            <div class="channel-name">Instagram</div>
+            <div class="channel-val">@caransh_car_decor — See our work</div>
+          </div>
+          <span class="channel-arrow">→</span>
+        </a>
+        <a class="channel" href="mailto:caranshcardecor@gmail.com">
+          <span class="channel-icon">✉️</span>
+          <div class="channel-info">
+            <div class="channel-name">Email</div>
+            <div class="channel-val">caranshcardecor@gmail.com</div>
+          </div>
+          <span class="channel-arrow">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="reveal-right">
+      <div class="map-placeholder">
+        <div class="map-title">📍 Find Us</div>
+        <div class="map-addr">
+          Car Decor, Ambika Beej Ke Pass<br/>
+          Ashok Travels Waali Line Mein<br/>
+          Mhow Neemuch Road, Nai Abaadi<br/>
+          Mandsaur, Madhya Pradesh
+        </div>
+        <iframe
+          class="map-embed"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps/embed/v1/search?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU3P6k&q=Nai+Abaadi+Mhow+Neemuch+Road+Mandsaur+Madhya+Pradesh"
+        ></iframe>
+        <a class="map-link" href="https://maps.google.com/?q=Nai+Abaadi+Mhow+Neemuch+Road+Mandsaur" target="_blank">Open in Google Maps ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><span>CAR</span>ANSH</div>
+  <p class="footer-text">Mandsaur's go-to destination for car accessories & custom styling</p>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#calculator">Cost Calculator</a>
+    <a href="https://wa.me/919770118143" target="_blank">WhatsApp</a>
+    <a href="https://instagram.com/caransh_car_decor" target="_blank">Instagram</a>
+    <a href="tel:+919770118143">Call</a>
+  </div>
+  <p style="font-size:.7rem;color:var(--text-dim);margin-top:28px;opacity:.5">© 2025 CARANSH Car Decor, Mandsaur · All rights reserved</p>
+</footer>
+
+<!-- INSTAGRAM FLOAT -->
+<a class="ig-float" href="https://instagram.com/caransh_car_decor" target="_blank" title="Follow on Instagram">
+  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+</a>
+
+<!-- WHATSAPP FLOAT -->
+<a class="wa-float" href="https://wa.me/919770118143?text=Hi%20CARANSH!%20I%20want%20to%20enquire%20about%20your%20services." target="_blank" title="Chat on WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+// NAV scroll
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60)
+});
+
+// Mobile menu
+function toggleMenu(){document.getElementById('mobMenu').classList.toggle('open')}
+
+// Intersection Observer for lazy reveal
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}})
+},{threshold:0.12});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stagger').forEach(el=>io.observe(el));
+
+// CALCULATOR
+const items = [
+  "Android Car Screen","Premium Seat Covers","LED Interior Lighting",
+  "Ultra HD Reverse Camera","360° Surround Camera","Headlamp Upgrade (HID/LED)",
+  "Speaker Upgrade (2 pcs)","Car Flooring (7D Mats)","Dashcam (Dual)",
+  "Custom Exterior Styling"
+];
+const prices = [6500,3200,1200,2800,6000,2500,2000,1800,3500,4000];
+
+function calcTotal(){
+  const checks = document.querySelectorAll('.calc-check');
+  let total = 0;
+  let selected = [];
+  checks.forEach((c,i)=>{
+    if(c.checked){total+=prices[i];selected.push({name:items[i],price:prices[i]})}
+  });
+  document.getElementById('totalVal').textContent = '₹'+total.toLocaleString('en-IN');
+  const listEl = document.getElementById('selectedList');
+  if(selected.length===0){
+    listEl.innerHTML='<em style="color:var(--text-dim)">Select services on the left to see your estimate here.</em>';
+    document.getElementById('calcWaBtn').style.display='none';
+    document.getElementById('discountNote').style.display='none';
+  } else {
+    listEl.innerHTML = selected.map(s=>`
+      <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)">
+        <span style="color:var(--text);font-size:.85rem">✔ ${s.name}</span>
+        <span style="color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700">₹${s.price.toLocaleString('en-IN')}</span>
+      </div>`).join('');
+    document.getElementById('calcWaBtn').style.display='block';
+    if(selected.length>=3){
+      document.getElementById('discountNote').style.display='block';
+    } else {
+      document.getElementById('discountNote').style.display='none';
+    }
+  }
+}
+
+function sendToWhatsApp(){
+  const checks = document.querySelectorAll('.calc-check');
+  let total=0, lines=[];
+  checks.forEach((c,i)=>{if(c.checked){total+=prices[i];lines.push(`• ${items[i]} – ₹${prices[i].toLocaleString('en-IN')}`)}});
+  if(!lines.length)return;
+  const msg = `Hi CARANSH! I used your cost calculator and selected the following services:\n\n${lines.join('\n')}\n\n*Estimated Total: ₹${total.toLocaleString('en-IN')}*\n\nPlease confirm the final price for my car.`;
+  window.open('https://wa.me/919770118143?text='+encodeURIComponent(msg),'_blank');
+}
+</script>
+</body>
+</html>
